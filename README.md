@@ -1,6 +1,8 @@
 # CPS493_Fall2021
 *This repo is for all students to follow*
 
+## Uses Bulma for styling
+
 
 ![img.png](img.png)
 
