@@ -73,7 +73,7 @@
           Hello World
         </h1>
         <p class="subtitle">
-          My first website with <strong>Bulma</strong>!
+          My first website with <strong>Bulma</strong> {{counter}}!
         </p>
 
         <article class="message is-primary">
@@ -97,8 +97,26 @@
           </article>
           
       </div>
-      <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+      <script src="https://unpkg.com/vue@next"></script>
+
+      <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> -->
       <script>
+        //creates one object that returns one preperty
+        const VM = {
+          data() {
+            return {
+              counter: 0//will be available in the template
+            }
+          }
+        }
+        //mount on the HTML
+        //VUE system then matches the html
+        //all you do is change this data
+        //any changes the system will do it, you do not change the html
+        //you only work with the JS.
+        Vue.createApp(VM).mount('.container')
+
+
           let size = 72;
           $(".message-header").click(function(){
               size+=10;
