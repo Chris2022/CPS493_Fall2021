@@ -101,12 +101,17 @@
 
       <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> -->
       <script>
-        //creates one object that returns one preperty
+        //creates one object that returns one property
         const VM = {
           data() {
             return {
               counter: 0//will be available in the template
             }
+          },
+          mounted() {
+            setInterval(() => {
+              this.counter++
+              }, 1000)
           }
         }
         //mount on the HTML
