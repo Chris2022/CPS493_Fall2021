@@ -8,142 +8,145 @@
     <title>No Framework</title>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-              <a class="navbar-item" href="https://bulma.io">
-                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-              </a>
-          
-              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-              </a>
-            </div>
-          
-            <div id="navbarBasicExample" class="navbar-menu">
-              <div class="navbar-start">
-                <a class="navbar-item">
-                  Home
-                </a>
-          
-                <a class="navbar-item">
-                  Documentation
-                </a>
-          
-                <div class="navbar-item has-dropdown is-hoverable">
-                  <a class="navbar-link">
-                    More
-                  </a>
-          
-                  <div class="navbar-dropdown">
-                    <a class="navbar-item">
-                      About
-                    </a>
-                    <a class="navbar-item">
-                      Jobs
-                    </a>
-                    <a class="navbar-item">
-                      Contact
-                    </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item">
-                      Report an issue
-                    </a>
-                  </div>
-                </div>
-              </div>
-          
-              <div class="navbar-end">
-                <div class="navbar-item">
-                  <div class="buttons">
-                    <a class="button is-primary">
-                      <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light">
-                      Log in
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-        <h1 class="title">
-          Hello Heroku
-        </h1>
-        <p class="subtitle">
-          My first website with <strong>Bulma</strong> {{ `${now}` }}!
-        </p>
+<div class="container">
 
-        <article class="message is-primary" :class="{'is-hidden': !visible}">
-<!--            colon means bind this property so whatever is inside is JS
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item">
+                    Home
+                </a>
+
+                <a class="navbar-item">
+                    Documentation
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        More
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item">
+                            About
+                        </a>
+                        <a class="navbar-item">
+                            Jobs
+                        </a>
+                        <a class="navbar-item">
+                            Contact
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Report an issue
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-light">
+                            Log in
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <h1 class="title">
+        Hello World
+    </h1>
+    <p class="subtitle">
+        My first website with <strong>Bulma</strong> {{ `${now}` }}  !
+    </p>
+    <!--            colon means bind this property so whatever is inside is JS
 the back tick is part of ES2020 is special string that contains code
 the string with a start and end back tick and a dollar tree anything inside is code
 returns a string font-size: ?px which it returns to the vue and vue hanldes the rest-->
-<!--            @click means to bind whatever is being clicked-->
-            <div class="message-header" :style="`font-size: ${counter}px`" @click="grow()" >
-              <p>Primary</p>
-              <button class="delete" aria-label="delete" @click="close()"></button>
-            </div>
-            <div class="message-body">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
-            </div>
-          </article>
+    <!--            @click means to bind whatever is being clicked-->
 
-          <article class="message is-warning">
-            <div class="message-header">
-              <p>oh no</p>
-              <button class="delete" aria-label="delete"></button>
-            </div>
-            <div class="message-body">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
-            </div>
-          </article>
-          
-      </div>
-      <script src="https://unpkg.com/vue@next"></script>
+    <article class="message is-primary" :class="{ 'is-hidden': !visible }" >
+        <div class="message-header" :style="` font-size: ${counter}px `" @click="grow()"  >
+            <p>Primary</p>
+            <button class="delete" aria-label="delete" @click="close()"></button>
+        </div>
+        <div class="message-body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>
+            Pellentesque risus mi</strong>, tempus quis placerat ut,
+            porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla.
+            Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+            efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus.
+            Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor
+            ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
+        </div>
+    </article>
 
-      <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> -->
-      <script>
-        //creates one object that returns one property
-        const VM = {
-          data() {
-              return {
-                  counter: 3,//will be available in the template
-                  now: new Date().toLocaleString(),
-                  visible: true
-              }
-          },
-            mounted() {
-                setInterval(() => this.now = new Date().toLocaleString() ,1000)
+    <article class="message is-warning">
+        <div class="message-header">
+            <p>Oh No!</p>
+            <button class="delete" aria-label="delete"></button>
+        </div>
+        <div class="message-body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>
+            Pellentesque risus mi</strong>, tempus quis placerat ut,
+            porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla.
+            Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+            efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus.
+            Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor
+            ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
+        </div>
+    </article>
+
+</div>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+
+    const VM = {
+        data() {
+            return {
+                counter: 3,
+                now: new Date().toLocaleString(),
+                visible: true
+            }
+        },
+        mounted() {
+            setInterval(() => this.now = new Date().toLocaleString() , 1000)
+        },
+        methods: {
+            grow(){
+                this.counter += 10;
             },
-            method:{
-              grow() {
-                  this.counter += 10;
-              },
-              close(){
-                  this.visible= false;
-              }
+            close(){
+                this.visible = false;
             }
         }
-        //mount on the HTML
-        //VUE system then matches the html
-        //all you do is change this data
-        //any changes the system will do it, you do not change the html
-        //you only work with the JS.
-        Vue.createApp(VM).mount('.container')
+    }
 
+    Vue.createApp(VM).mount('.container')
+    //mount on the HTML
+    //VUE system then matches the html
+    //all you do is change this data
+    //any changes the system will do it, you do not change the html
+    //you only work with the JS.
+</script>
 
-          let size = 72;
-          $(".message-header").click(function(){
-              size+=10;
-            $(".message-header p ").css({fontSize:size});
-          });
-
-          $(".delete").click(function(){
-              $(this).closest(".message").slideUp();//This references the element that was clicked, closest will be the the selector to the closest parent
-          });
-      </script>
 </body>
 </html>
