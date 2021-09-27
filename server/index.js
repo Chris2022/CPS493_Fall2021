@@ -6,12 +6,13 @@ const port = 3000
 // when someone sends a get message with this particular path,
 // then I will send back hello world
 
-app.get('/', (req, res) => {
+app
+.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 .get("/newpaltz", (req,res) => {
-  res.send("Hello Newpaltz")
+  res.send("Hello New paltz")
 })
 
 app.listen(port, () => {
