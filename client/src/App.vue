@@ -1,21 +1,20 @@
 <template>
- <div class="container">
-    <Nav />
-    <router-view/>
- </div>
+    <div class="container">
+        <Nav />
+
+        <router-view/>        
+    </div>
+
 </template>
 
 <style lang="scss">
-
 </style>
 
 <script>
-import Nav from './Components/Nav';
-// import LoginBadge from './Components/LoginBadge';
+import Nav from "./Components/Nav.vue";
 export default {
-  components: {
-    Nav,
-
-  }
+    components: {
+        Nav
+    }
 }
 </script>

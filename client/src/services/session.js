@@ -4,7 +4,7 @@ const session = {
     Login(email, password){
 
         this.user = {
-            FirstName: 'Moshe',
+            FirstName: 'Chris',
             LastName: email,
             Password: password,
             id: 613,
