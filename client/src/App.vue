@@ -1,7 +1,7 @@
 <template>
  <div class="container">
     <Nav />
-    <router-view123/>
+    <router-view/>
  </div>
 </template>
 
@@ -11,11 +11,11 @@
 
 <script>
 import Nav from './Components/Nav';
-import LoginBadge from './Components/LoginBadge';
+// import LoginBadge from './Components/LoginBadge';
 export default {
   components: {
     Nav,
-    LoginBadge
+
   }
 }
 </script>

@@ -1,33 +1,36 @@
 <template>
-    <div class="buttons" v-if="!name">
-      <a class="button is-primary">
+    <div class="buttons" v-if="!Session.user">
+          <a class="button is-primary">
             <strong>Sign up</strong>
-        </a>
-        <a class="button is-light" @click="login">Log in
-        </a>
+          </a>
+          <a class="button is-light" @click="login">
+            Log in
+          </a>
     </div>
     <div v-else>
-        Hello {{name}}
+        Hello {{name}} 
     </div>
 </template>
 
 <script>
-import Session, {Login} from "../services/session";
+import Session from "../services/session";
 
 export default {
-    data: ()=>({
-        Session
-    }),
-    methods:{
+    data (){
+        return ({ 
+            Session
+        })
+    },
+    methods: {
         login(){
-            console.log(Session);
-            Login();
-            console.log(Session);
+            this.$router.push('/login');
+            //this.Session.Login();
+
         }
     },
     computed:{
         name(){
-            return this.Session.user.Firstname + ' ' + this.Session.user.Lastname
+            return this.Session.user.FirstName + ' ' + this.Session.user.LastName;
         }
     }
 }
