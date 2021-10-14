@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Post from '../Components/Post.vue';
+import Post from "../Components/Post.vue";
 import session from "../services/session";
 import { GetWall } from "../services/posts";
 

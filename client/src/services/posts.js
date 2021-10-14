@@ -64,7 +64,7 @@ filer the post and only want to filer the posts to the user that you are looking
 */
 export function GetFeed(handle) { return listWithOwner()
     //filer  post is every post and it checks if one the user following is approved by the poster of
-    //that item
+    //that item 
     .filter(post=> GetByHandle(handle).following.some(f=> f.handle == post.user_handle && f.isApproved) );     }
 
 
