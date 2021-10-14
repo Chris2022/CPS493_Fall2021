@@ -54,12 +54,17 @@ const listWithOwner = ()=> list.map(x => ({
 export function GetAll() {
     return listWithOwner();
 }
-
+//gets all the posts from one user
 export function GetWall(handle) {
     return listWithOwner().filter(post=> post.user_handle == handle);
 }
+/*get activity from everyone you follow
+filer the post and only want to filer the posts to the user that you are looking at
 
+*/
 export function GetFeed(handle) { return listWithOwner()
+    //filer  post is every post and it checks if one the user following is approved by the poster of
+    //that item
     .filter(post=> GetByHandle(handle).following.some(f=> f.handle == post.user_handle && f.isApproved) );     }
 
 
