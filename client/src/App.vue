@@ -1,10 +1,13 @@
 <template>
     <div class="container">
-        <Nav />
+        <div class="columns">
+            <div class="column">
 
+            </div>
+        </div>
+        <Nav />
         <router-view/>        
     </div>
-
 </template>
 
 <style lang="scss">
