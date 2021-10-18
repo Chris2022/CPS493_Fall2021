@@ -3,12 +3,19 @@ import { Login } from "./users";
 
 const session = {
     user: null,
-    messages: [],
+    messages: [
+        {text:"hello world", type:"danger"},
+        {text:"hello new paltz", type:"success"}
+    ],//{text:string, type:string}
     toRoute: "/feed",
     Login(handle, password){
-        const response = Login(handle,password);
-        this.user = response.user;
-        router.push(this.toRoute)
+        try {
+            const response = Login(handle,password);
+            this.user = response.user;
+            router.push(this.toRoute);
+        } catch (error) {
+            this.messages.push({text:error.msg, type:'warning'});
+        }
     }
 };
 

@@ -5,6 +5,7 @@
             </div>
         </div>
         <Nav />
+        <messages />
         <router-view/>        
     </div>
 </template>
@@ -13,10 +14,12 @@
 </style>
 
 <script>
+import Messages from './Components/Messages.vue';
 import Nav from "./Components/Nav.vue";
 export default {
     components: {
-        Nav
+        Nav,
+        Messages
     }
 }
 </script>
