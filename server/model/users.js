@@ -1,7 +1,6 @@
 /* B"H
 
 */
-const {GetByHandle} = require('../controller/users')
 const list = [
     { 
         firstName: 'Moshe',

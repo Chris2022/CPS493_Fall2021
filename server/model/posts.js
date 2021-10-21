@@ -1,7 +1,7 @@
 /* B"H
 
 */
-import { GetByHandle } from "./users";
+const { GetByHandle } = require( "./users");
 
 const list = [
     { 
