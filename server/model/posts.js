@@ -69,7 +69,7 @@ module.exports.GetFeed = function GetFeed(handle) { return listWithOwner()
 
 
 module.exports.Get = function Get(post_id) { return list[post_id]; }
-export function Add(post) {
+module.exports.Add = function Add(post) {
     if(!post.user_handle){
         throw {code: 422, msg: "Post must have an Owner"}
     }
@@ -87,3 +87,4 @@ module.exports.Delete= function Delete(post_id) {
     list.splice(post_id, 1);
     return post;
 }
+module.exports.Search = q => list.find(x=> x.caption.includes(q))

@@ -43,7 +43,7 @@ const list = [
 ];
 
 module.exports.GetAll= function GetAll() { return list; }
-module.exports.Get= function Get(user_id) { return list[user_id]; }
+module.exports.Get= user_id => list[user_id];
 //returns a boolean if x.handle == handle the return is true, if not returns false
 //what 
 module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
