@@ -20,7 +20,10 @@ app
   .use(express.json())//checks to see the header if the application type = json
   .use('/users', userController)
   .use('/posts', postscontroller)
-
+app
+  .use((err,req, res,next)=>{
+    res.status(err.code || 500).send(err);
+  })
 app 
   .get('*',(req,res) =>res.sendFile(path.join(__dirname,'../docs/index.html')))//you can include an actual file. Can send a file
 app.listen(port, () => {
