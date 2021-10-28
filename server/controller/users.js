@@ -6,6 +6,9 @@ app
 .get("/", (req, res, next) =>{
     res.send(model.GetAll());
 })
+/* "/:user" is a parameter and it is a path.
+
+*/
 .get("/:user", (req, res, next) =>{
     res.send(model.Get(req.param.user_id));
 })

@@ -17,6 +17,7 @@ console.log(`The best class at New Paltz is ${process.env.BEST_CLASS}`);
 
 app
   .use("/", express.static(path.join(__dirname,'../docs')))//returns a sub pipeline
+  .use(express.json())//checks to see the header if the application type = json
   .use('/users', userController)
   .use('/posts', postscontroller)
 
