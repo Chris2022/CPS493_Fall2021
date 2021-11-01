@@ -1,8 +1,8 @@
 const express = require('express')//can include express because of the node module
 const path = require('path');require('dotenv').config();
 
-const userController =require("./controller/users")
-const postscontroller = require('./controller/posts');
+const userController =require("./controllers/users")
+const postscontroller = require('./controllers/posts');
 
 const app = express() //need to call the express constructor right away
 const port = process.env.PORT||3000 //the port that will be receiving our message.

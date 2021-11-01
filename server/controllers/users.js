@@ -1,5 +1,5 @@
 const express = require('express');
-const model = require("../model/users")
+const model = require("../models/users")
 const app = express.Router() //creates a new pipeline
 
 app
