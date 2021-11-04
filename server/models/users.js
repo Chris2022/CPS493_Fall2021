@@ -1,6 +1,8 @@
 /* B"H
 
 */
+const bcrypt = require('bcrypt');
+
 const list = [
     { 
         firstName: 'Moshe',
@@ -48,13 +50,24 @@ module.exports.Get= user_id => list[user_id];
 //what 
 module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
 //does some checking
-module.exports.Add= function Add(user) {
+module.exports.Add= function Add(user, cb) {
     if(!user.firstName){
-        throw { code: 422, msg: "First Name is required" }
+        cb ({ code: 422, msg: "First Name is required" });
     }
-     list.push(user);
-     //returns user but not the password
-     return { ...user, password: undefined };
+    //whenever a user is added to system, we want to take password and convert it to a hash
+    // user.password = hash(user.password);
+    //bycrpyt.hash is an asynchronous function
+    bcrypt.hash(user.password,+process.env.SALT_ROUNDS,function(err,hash){
+        if(err){
+            cb(err); return;
+        }
+        user.password = hash;
+        list.push(user);
+        //pass in null which means no error and pass the value we want passed out
+        //so this is the equivalent to returning in the add.
+
+        cb(null,{ ...user, password: undefined });
+    });
 }
 
 
@@ -81,18 +94,21 @@ module.exports.Delete= function Delete(user_id) {
     list.splice(user_id, 1);//splice is delete in JS arrays
     return user;
 }
-
-module.exports.Login = function Login(handle, password){
+//third parameter
+module.exports.Login = function Login(handle, password,cb){
     console.log({ handle, password})//debugging here
     const user = list.find(x=> x.handle == handle);// find user, if you find one then get password, if not
-    //then throw an error
-    if(!user) throw { code: 401, msg: "Sorry there is no user with that handle" };
+    //pass the error in asynchronous form
+    if(!user) cb({ code: 401, msg: "Sorry there is no user with that handle" });
+    bcrypt.compare(password,user.password, function(err,result){
     //check the passowrd of the user and the password entered
-    if( ! (password == user.password) ){
-        throw { code: 401, msg: "Wrong Password" };
+    if( !result ){
+        return cb({ code: 401, msg: "Wrong Password" });
     }
-    //send user data back to user but not the password.
+    //if result is true, pull the password
     const data = { ...user, password: undefined };
+    //return 
+    cb(null,{ user: data });
 
-    return { user: data };
+    });
 }
