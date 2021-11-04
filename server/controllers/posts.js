@@ -14,7 +14,7 @@ id is the parameter so we do params.id
 */
 .get("/:id", (req, res, next) =>{
     console.log(req.headers)
-    res.send(model.Get(req.param.id));
+    res.send(model.Get(req.params.id));
 })
 .post("/", (req, res, next) =>{
     const newPost =model.Add(req.body)//body is gonna be a parsed version of the json we send

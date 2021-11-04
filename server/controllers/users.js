@@ -10,27 +10,22 @@ app
 
 */
 .get("/:user_id", (req, res, next) =>{
-    res.send(model.Get(req.param.user_id));
+    res.send(model.Get(req.params.user_id));
 })
 .post("/Login", (req, res, next) =>{
-    model.Login(req.body.handle, req.body.password, (err,user)=>{
-        if(err){
-            next(err);return;//calling next parameter err is better on a global level
-            //always return when saying next
-        }
+    model.Login(req.body.handle, req.body.password)
+        .then(user=>{
         //no error ends pipeline and sends user
         res.send(user);
-    });
+    }).catch(next);// this function will get called only if there is an error
 })
 .post("/register", (req, res, next) =>{
     const user = req.body;//holding first, name, etc.
     //pass user
-    model.Add(user,(err,user)=>{
-        if(err){
-            next(err)//calling next parameter err is better on a global level
-        }
+    model.Add(req.body)
+        .then(user=>{
         //no error ends pipeline and sends user
-        res.send(user);
-    });
+        res.status(201).send(user);
+    }).catch(next);//all errors will go to catch
 })
 module.exports = app;// the export of this file is its own app. 

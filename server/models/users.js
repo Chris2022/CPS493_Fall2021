@@ -52,21 +52,16 @@ module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.fi
 //does some checking
 module.exports.Add= function Add(user, cb) {
     if(!user.firstName){
-        cb ({ code: 422, msg: "First Name is required" });
+        return Promise.reject({ code: 422, msg: "First Name is required" });
     }
-    //whenever a user is added to system, we want to take password and convert it to a hash
-    // user.password = hash(user.password);
-    //bycrpyt.hash is an asynchronous function
-    bcrypt.hash(user.password,+process.env.SALT_ROUNDS,function(err,hash){
-        if(err){
-            cb(err); return;
-        }
+    return bcrypt.hash(user.password,+process.env.SALT_ROUNDS)
+    .then(hash =>{
         user.password = hash;
         list.push(user);
         //pass in null which means no error and pass the value we want passed out
         //so this is the equivalent to returning in the add.
-
-        cb(null,{ ...user, password: undefined });
+        return { ...user, password: undefined };//this user object is returned to promise
+        //promise will return it to the next then
     });
 }
 
@@ -95,20 +90,23 @@ module.exports.Delete= function Delete(user_id) {
     return user;
 }
 //third parameter
-module.exports.Login = function Login(handle, password,cb){
+module.exports.Login = function Login(handle, password){
     console.log({ handle, password})//debugging here
     const user = list.find(x=> x.handle == handle);// find user, if you find one then get password, if not
     //pass the error in asynchronous form
-    if(!user) cb({ code: 401, msg: "Sorry there is no user with that handle" });
-    bcrypt.compare(password,user.password, function(err,result){
-    //check the passowrd of the user and the password entered
-    if( !result ){
-        return cb({ code: 401, msg: "Wrong Password" });
-    }
-    //if result is true, pull the password
-    const data = { ...user, password: undefined };
-    //return 
-    cb(null,{ user: data });
-
+    //when we reject it is the equivalent of an error
+    //we always have to return a promise
+    if(!user) return Promise.reject({ code: 401, msg: "Sorry there is no user with that handle" });
+    
+    return bcrypt.compare(password,user.password)
+        .then(result =>{
+            //check the passowrd of the user and the password entered
+            if( !result ){
+                throw({ code: 401, msg: "Wrong Password" });
+            }
+            //if result is true, pull the password
+            const data = { ...user, password: undefined };
+            //return 
+            return { user: data };
     });
 }
