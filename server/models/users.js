@@ -2,6 +2,9 @@
 
 */
 const bcrypt = require('bcrypt');
+const {client} = require('./mongo');
+
+const collection = client.db(process.env.MONGO_DB).collection('users');
 
 const list = [
     { 
@@ -44,22 +47,23 @@ const list = [
 
 ];
 
-module.exports.GetAll= function GetAll() { return list; }
-module.exports.Get= user_id => list[user_id];
+module.exports.GetAll= function GetAll() { return collection.find().toArray(); }
+module.exports.Get= user_id => collection.findOne({_id:user_id});//pass it empty object then it will return the very first object
 //returns a boolean if x.handle == handle the return is true, if not returns false
 //what 
 module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
 //does some checking
-module.exports.Add= async function Add(user, cb) {
+module.exports.Add= async function Add(user) {
     if(!user.firstName){
         return Promise.reject({ code: 422, msg: "First Name is required" });
     }
     const hash = await bcrypt.hash(user.password,+process.env.SALT_ROUNDS)
         user.password = hash;
-        list.push(user);
+        const user2 = await collection.insertOne(user);
+        user._id = user2.insertedId();
         //pass in null which means no error and pass the value we want passed out
         //so this is the equivalent to returning in the add.
-        return { ...user, password: undefined };//this user object is returned to promise
+        return { ...user2, password: undefined };//this user object is returned to promise
         //promise will return it to the next then
 }
 
@@ -92,7 +96,7 @@ module.exports.Delete= function Delete(user_id) {
 //returns promise when either an await is first or return.
 module.exports.Login = async function Login(handle, password){
     console.log({ handle, password})//debugging here
-    const user = list.find(x=> x.handle == handle);// find user, if you find one then get password, if not
+    const user = collection.findOne(handle);// find user, if you find one then get password, if not
     //pass the error in asynchronous form
     //when we reject it is the equivalent of an error
     //we always have to return a promise
@@ -119,4 +123,10 @@ module.exports.Async = async()=>{
 
     console.log("Inner function: 2");
 
+}
+
+module.exports.Seed = async ()=>{
+    for (const x of list) {
+        await module.exports.Add(x)
+    }
 }
