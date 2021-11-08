@@ -50,19 +50,17 @@ module.exports.Get= user_id => list[user_id];
 //what 
 module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
 //does some checking
-module.exports.Add= function Add(user, cb) {
+module.exports.Add= async function Add(user, cb) {
     if(!user.firstName){
         return Promise.reject({ code: 422, msg: "First Name is required" });
     }
-    return bcrypt.hash(user.password,+process.env.SALT_ROUNDS)
-    .then(hash =>{
+    const hash = await bcrypt.hash(user.password,+process.env.SALT_ROUNDS)
         user.password = hash;
         list.push(user);
         //pass in null which means no error and pass the value we want passed out
         //so this is the equivalent to returning in the add.
         return { ...user, password: undefined };//this user object is returned to promise
         //promise will return it to the next then
-    });
 }
 
 
@@ -90,23 +88,35 @@ module.exports.Delete= function Delete(user_id) {
     return user;
 }
 //third parameter
-module.exports.Login = function Login(handle, password){
+//async means a promise is returned.
+//returns promise when either an await is first or return.
+module.exports.Login = async function Login(handle, password){
     console.log({ handle, password})//debugging here
     const user = list.find(x=> x.handle == handle);// find user, if you find one then get password, if not
     //pass the error in asynchronous form
     //when we reject it is the equivalent of an error
     //we always have to return a promise
     if(!user) return Promise.reject({ code: 401, msg: "Sorry there is no user with that handle" });
-    
-    return bcrypt.compare(password,user.password)
-        .then(result =>{
-            //check the passowrd of the user and the password entered
-            if( !result ){
-                throw({ code: 401, msg: "Wrong Password" });
-            }
-            //if result is true, pull the password
-            const data = { ...user, password: undefined };
-            //return 
-            return { user: data };
-    });
+    //code runs until compare finshes checking the password and the hash
+    //then goes an executes everything in the then.
+    // await waits until the promise is then then unwraps the promise and the result
+    // is what the promise would be.
+    const result = await bcrypt.compare(password,user.password)
+        //check the passowrd of the user and the password entered
+        if( !result ){
+            throw({ code: 401, msg: "Wrong Password" });
+        }
+        //if result is true, pull the password
+        const data = { ...user, password: undefined };
+        //return the data to the user.
+        return { user: data };
+}
+
+module.exports.Async = async()=>{
+    console.log("Inner function: 1");
+
+    await Promise.resolve();//some function that would return promise that is already solved
+
+    console.log("Inner function: 2");
+
 }

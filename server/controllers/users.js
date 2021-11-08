@@ -3,6 +3,12 @@ const model = require("../models/users")
 const app = express.Router() //creates a new pipeline
 
 app
+// .get("/async", async (req, res, next) =>{
+//     console.log("Outer Function:1");
+//     model.Async();
+//     res.send("Done!");
+//     console.log("Outer Function: 2");
+// })
 .get("/", (req, res, next) =>{
     res.send(model.GetAll());
 })
