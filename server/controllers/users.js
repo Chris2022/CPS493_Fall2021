@@ -49,4 +49,18 @@ app
         })
         .catch(next) 
 })
+.patch("/:user_id", (req, res, next) =>{
+
+    model   .Update(req.params.user_id, req.body)
+            .then( user=> res.send(user) )
+            .catch(next) 
+
+})
+.delete("/:user_id", (req, res, next) =>{
+
+    model   .Delete(req.params.user_id)
+            .then( user=> res.send({ deleted: user }) )
+            .catch(next) 
+
+})
 module.exports = app;// the export of this file is its own app. 

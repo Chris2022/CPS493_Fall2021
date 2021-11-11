@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const {client} = require('./mongo');
 
 const collection = client.db(process.env.MONGO_DB).collection('users');
+module.exports.collection = collection;
 
 const list = [
     { 
@@ -51,8 +52,7 @@ module.exports.GetAll= function GetAll() { return collection.find().toArray(); }
 module.exports.Get= user_id => collection.findOne({_id:user_id});//pass it empty object then it will return the very first object
 //returns a boolean if x.handle == handle the return is true, if not returns false
 //what 
-module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
-//does some checking
+module.exports.GetByHandle = (handle) => collection.findOne({ handle }).then(x=> ({ ...x, password: undefined }));//does some checking
 module.exports.Add= async function Add(user) {
     if(!user.firstName){
         return Promise.reject({ code: 422, msg: "First Name is required" });
@@ -68,28 +68,21 @@ module.exports.Add= async function Add(user) {
 }
 
 
-module.exports.Update = function Update(user_id, user) {
-    const oldObj = list[user_id];
-    if(user.firstName){
-        oldObj.firstName = user.firstName;
-    }
-    if(user.lastName){
-        oldObj.lastName = user.lastName;
-    }
-    if(user.handle){
-        oldObj.handle = user.handle;
-    }
-    if(user.pic){
-        oldObj.pic = user.pic;
-    }
-    //list[user_id] = newObj ;
-    return { ...oldObj, password: undefined };
+module.exports.Update = async function Update(user_id, user) {
+    const results = await collection.findOneAndUpdate(
+        {_id: new ObjectId(user_id) }, 
+        { $set: user },
+        { returnDocument: 'after'}
+    );
+    console.log({ user_id, results });
+        
+    return { ...results.value, password: undefined };
 }
 //delete user from list
-module.exports.Delete= function Delete(user_id) {
-    const user = list[user_id];
-    list.splice(user_id, 1);//splice is delete in JS arrays
-    return user;
+module.exports.Delete = async function Delete(user_id) {
+    const results = await collection.findOneAndDelete({_id: new ObjectId(user_id) })
+
+    return results.value;
 }
 //third parameter
 //async means a promise is returned.
@@ -124,7 +117,6 @@ module.exports.Async = async()=>{
     console.log("Inner function: 2");
 
 }
-
 module.exports.Seed = async ()=>{
     for (const x of list) {
         await module.exports.Add(x)
