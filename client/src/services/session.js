@@ -16,17 +16,18 @@ const session = {
         }
     },
     Error(error){
-        console.log(error);
-        const msg  = error.msg ?? error;
-        this.messages.push({text:msg, type:'warning'});
+        console.error(error);
+        const msg = error.msg ?? error;
+        this.messages.push({ text: msg, type: 'warning' })
         NotificationProgrammatic.open({
-            duration:5000,
+            duration: 5000,
             message: msg,
             variant: 'danger',
-            closable: true,
             type: 'danger',
+            closable: true,
 
         })
+
     }
 };
 
