@@ -1,8 +1,8 @@
 /* B"H
-
 */
 const bcrypt = require('bcrypt');
-const {client} = require('./mongo');
+const { ObjectId } = require('bson');
+const { client } = require('./mongo');
 
 const collection = client.db(process.env.MONGO_DB).collection('users');
 module.exports.collection = collection;
@@ -48,27 +48,34 @@ const list = [
 
 ];
 
-module.exports.GetAll= function GetAll() { return collection.find().toArray(); }
-module.exports.Get= user_id => collection.findOne({_id:user_id});//pass it empty object then it will return the very first object
-//returns a boolean if x.handle == handle the return is true, if not returns false
-//what 
-module.exports.GetByHandle = (handle) => collection.findOne({ handle }).then(x=> ({ ...x, password: undefined }));//does some checking
-module.exports.Add= async function Add(user) {
+module.exports.GetAll = function GetAll() { return collection.find().toArray() ; }
+
+module.exports.Get = user_id => collection.findOne({_id: new ObjectId(user_id)}) 
+
+module.exports.GetByHandle = (handle) => collection.findOne({ handle }).then(x=> ({ ...x, password: undefined }));
+
+module.exports.Add = async function Add(user) {
     if(!user.firstName){
-        return Promise.reject({ code: 422, msg: "First Name is required" });
+         return Promise.reject( { code: 422, msg: "First Name is required" } )
     }
-    const hash = await bcrypt.hash(user.password,+process.env.SALT_ROUNDS)
+
+    const hash = await bcrypt.hash(user.password, +process.env.SALT_ROUNDS)
+    
+        console.log({
+            user, salt: process.env.SALT_ROUNDS, hash
+        })
+        
         user.password = hash;
+
         const user2 = await collection.insertOne(user);
-        user._id = user2.insertedId();
-        //pass in null which means no error and pass the value we want passed out
-        //so this is the equivalent to returning in the add.
-        return { ...user2, password: undefined };//this user object is returned to promise
-        //promise will return it to the next then
+        user._id = user2.insertedId;
+
+        return { ...user, password: undefined };
 }
 
 
 module.exports.Update = async function Update(user_id, user) {
+
     const results = await collection.findOneAndUpdate(
         {_id: new ObjectId(user_id) }, 
         { $set: user },
@@ -78,45 +85,33 @@ module.exports.Update = async function Update(user_id, user) {
         
     return { ...results.value, password: undefined };
 }
-//delete user from list
+
 module.exports.Delete = async function Delete(user_id) {
     const results = await collection.findOneAndDelete({_id: new ObjectId(user_id) })
 
     return results.value;
 }
-//third parameter
-//async means a promise is returned.
-//returns promise when either an await is first or return.
+
 module.exports.Login = async function Login(handle, password){
-    console.log({ handle, password})//debugging here
-    const user = collection.findOne(handle);// find user, if you find one then get password, if not
-    //pass the error in asynchronous form
-    //when we reject it is the equivalent of an error
-    //we always have to return a promise
-    if(!user) return Promise.reject({ code: 401, msg: "Sorry there is no user with that handle" });
-    //code runs until compare finshes checking the password and the hash
-    //then goes an executes everything in the then.
-    // await waits until the promise is then then unwraps the promise and the result
-    // is what the promise would be.
-    const result = await bcrypt.compare(password,user.password)
-        //check the passowrd of the user and the password entered
-        if( !result ){
-            throw({ code: 401, msg: "Wrong Password" });
-        }
-        //if result is true, pull the password
-        const data = { ...user, password: undefined };
-        //return the data to the user.
-        return { user: data };
+    console.log({ handle, password})
+    const user = await collection.findOne({ handle });
+    if(!user){
+        return Promise.reject( { code: 401, msg: "Sorry there is no user with that handle" });
+    }
+
+    const result = await bcrypt.compare(password, user.password)
+        
+    if( ! result ){
+        throw { code: 401, msg: "Wrong Password" } ;
+    }
+    
+    const data = { ...user, password: undefined };
+    
+    return { user: data };
+
+    
 }
 
-module.exports.Async = async()=>{
-    console.log("Inner function: 1");
-
-    await Promise.resolve();//some function that would return promise that is already solved
-
-    console.log("Inner function: 2");
-
-}
 module.exports.Seed = async ()=>{
     for (const x of list) {
         await module.exports.Add(x)
