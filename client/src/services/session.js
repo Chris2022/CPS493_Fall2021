@@ -12,16 +12,16 @@ const session = {
             this.user = response.user;
             router.push(this.toRoute);
         } catch (error) {
-            this.error(error)
+            this.Error(error)
         }
     },
-    error(error){
+    Error(error){
         console.log(error);
         const msg  = error.msg ?? error;
         this.messages.push({text:msg, type:'warning'});
         NotificationProgrammatic.open({
             duration:5000,
-            message: error.msg,
+            message: msg,
             variant: 'danger',
             closable: true,
             type: 'danger',

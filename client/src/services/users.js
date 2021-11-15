@@ -1,5 +1,4 @@
 /* B"H
-
 */
 
 const list = [
@@ -45,16 +44,13 @@ const list = [
 
 export function GetAll() { return list; }
 export function Get(user_id) { return list[user_id]; }
-//returns a boolean if x.handle == handle the return is true, if not returns false
-//what 
 export function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
-//does some checking
+
 export function Add(user) {
     if(!user.firstName){
         throw { code: 422, msg: "First Name is required" }
     }
      list.push(user);
-     //returns user but not the password
      return { ...user, password: undefined };
 }
 
@@ -76,23 +72,22 @@ export function Update(user_id, user) {
     //list[user_id] = newObj ;
     return { ...oldObj, password: undefined };
 }
-//delete user from list
+
 export function Delete(user_id) {
     const user = list[user_id];
-    list.splice(user_id, 1);//splice is delete in JS arrays
+    list.splice(user_id, 1);
     return user;
 }
 
 export function Login(handle, password){
-    console.log({ handle, password})//debugging here
-    const user = list.find(x=> x.handle == handle);// find user, if you find one then get password, if not
-    //then throw an error
+    console.log({ handle, password})
+    const user = list.find(x=> x.handle == handle);
     if(!user) throw { code: 401, msg: "Sorry there is no user with that handle" };
-    //check the passowrd of the user and the password entered
+
     if( ! (password == user.password) ){
         throw { code: 401, msg: "Wrong Password" };
     }
-    //send user data back to user but not the password.
+
     const data = { ...user, password: undefined };
 
     return { user: data };
