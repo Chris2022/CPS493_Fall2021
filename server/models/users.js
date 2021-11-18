@@ -96,7 +96,7 @@ module.exports.Login = async function Login(handle, password){
     console.log({ handle, password})
     const user = await collection.findOne({ handle });
     if(!user){
-        return Promise.reject( { code: 401, msg: "Sorry there is no user with that handle" });
+        return Promise.reject( { code: 401, msg: "Sorry but you cannot login" });
     }
 
     const result = await bcrypt.compare(password, user.password)
