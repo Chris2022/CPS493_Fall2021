@@ -24,7 +24,11 @@
             <button class="button is-success">
             Login
             </button>
+                  <button class="button is-success" type="submit" @click="loginGoogle()">
+            Login with google
+            </button>
         </p>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
         </div>
   </form>
 </template>
@@ -40,8 +44,30 @@ export default {
     methods: {
         login(){
             this.Session.Login(this.email, this.password);
+        },
+        loginGoogle(){
+            auth.signin().then(x =>{
+                
+            });
         }
     }
+}
+/* global gapi */
+let auth;
+const tag = document.createElement('script');
+tag.id = "google-auth-script";
+tag.src = 'https://apis.google.com/js/platform.js';
+
+document.head.append(tag);
+tag.onload =()=>{
+    gapi.load('auth2', function () {
+        gapi.auth2.init({
+            client_i: process.env.VUE_APP_GOOGLE_CLIENT_ID
+        }).then()
+        .then(x=>{
+            auth = gapi.auth2.getAuthInstance();
+        })
+    });
 }
 </script>
 
