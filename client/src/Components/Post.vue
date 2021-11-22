@@ -39,11 +39,19 @@
 export default {
     props: {
         post: Object
+    },
+    computed : {
+      prettyDate(){
+        
+      }
     }
 }
 </script>
 
 <style>
+.card{
+  margin-bottom: 10px;
+}
     button.delete {
         position: absolute;
         top: 5px;
