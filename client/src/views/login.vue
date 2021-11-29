@@ -67,7 +67,7 @@ export default {
             }).then()
             .then(()=> {
                 auth = gapi.auth2.getAuthInstance();
-                
+               
             })
 
         });
