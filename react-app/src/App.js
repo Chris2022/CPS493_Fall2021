@@ -1,9 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import React from "react";
 
 function App() {
   return (
     <div className="App">
+      <section className="hero is-medium is-link">
+        <div className="hero-body">
+          <p className="title">Medium hero</p>
+          <p className="subtitle">Medium subtitle</p>
+        </div>
+      </section>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
