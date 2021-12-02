@@ -2,9 +2,11 @@ import logo from "./assets/logo.svg";
 import "./App.css";
 import React from "react";
 import Nav from "./components/Nav";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
+    <BrowserRouter> 
     <div className="App">
       <Nav/>
       <section className="hero is-medium is-link">
@@ -27,7 +29,7 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
+    </div></BrowserRouter>
   );
 }
 

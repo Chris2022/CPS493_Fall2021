@@ -1,7 +1,8 @@
 import { template } from "lodash";
+import {NavLink} from 'react-router-dom';
 import React from "react";
 export default function Nav() {
-  const dater = {isActive: false};
+  const data = {isActive: false};
   return (
     <nav
       className="navbar is-primary"
@@ -30,42 +31,42 @@ export default function Nav() {
 
       <div className="navbar-menu " className="{'is-active': isActive }">
         <div className="navbar-start">
-          <router-link
+          <NavLink
             className="navbar-item is-tab"
             to="/"
             active-className="is-active"
             exact
           >
             Home
-          </router-link>
+          </NavLink>
 
-          <router-link
+          <NavLink
             className="navbar-item is-tab"
             to="/feed"
             active-className="is-active"
           >
             Feed
-          </router-link>
+          </NavLink>
 
-          <router-link
+          <NavLink
             className="navbar-item is-tab"
             to="/about"
             active-className="is-active"
           >
             Documentation
-          </router-link>
+          </NavLink>
 
           <div className="navbar-item has-dropdown is-hoverable">
             <a className="navbar-link">More</a>
 
             <div className="navbar-dropdown">
-              <router-link
+              <NavLink
                 className="navbar-item is-tab"
                 to="/about"
                 active-className="is-active"
               >
                 About
-              </router-link>
+              </NavLink>
               <a className="navbar-item">Jobs</a>
               <a className="navbar-item">Contact</a>
               <hr className="navbar-divider" />
