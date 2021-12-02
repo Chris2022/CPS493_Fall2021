@@ -1,6 +1,8 @@
 import { template } from "lodash";
 import {NavLink} from 'react-router-dom';
 import React from "react";
+import logo from "../assets/logo.svg";
+
 export default function Nav() {
   const data = {isActive: false};
   return (
@@ -11,7 +13,7 @@ export default function Nav() {
     >
       <div className="navbar-brand">
         <a className="navbar-item" href="https://bulma.io">
-          <img src="../assets/logo.png" height="28" />
+          <img src="{logo}" className="App-logo" height="28" />
           <h3 className="title">Be Happy</h3>
         </a>
 
