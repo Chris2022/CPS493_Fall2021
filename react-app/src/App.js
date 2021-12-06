@@ -1,17 +1,21 @@
-import "./App.css";
 import React from "react";
+
+import './App.css';
 import Nav from "./components/Nav";
 import { BrowserRouter } from "react-router-dom";
-import OurRoutes from "./Routes";
+import OurRoutes from "./OurRoutes";
 
 function App() {
   return (
-    <BrowserRouter> 
+      <BrowserRouter>
     <div className="App">
-      <Nav/>
-    
-      <OurRoutes/>
-    </div></BrowserRouter>
+
+        <Nav />
+        <OurRoutes />
+        
+
+    </div>
+    </BrowserRouter>
   );
 }
 
